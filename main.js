@@ -31,43 +31,43 @@ async function main () {
     loadPokemons(allPokemons)    
 }
 
-async function loadPokemons (listOfPokemons) {
-    const ul = document.querySelector('ul')
 
+function setListItem () {
     const li = document.createElement('li')
-    li.classList.add('pokemon-card')
     const infoWrapper = document.createElement('div')
     const pokemonTitle = document.createElement('h1')
     const pokemonType = document.createElement('p')
+    const pokemonImage = document.createElement('img')
+    li.classList.add('pokemon-card')
     pokemonTitle.classList.add('pokemon-title')
     pokemonType.classList.add('pokemon-type')
-    const pokemonImage = document.createElement('img')
     infoWrapper.appendChild(pokemonTitle)
     infoWrapper.appendChild(pokemonType)
     li.appendChild(infoWrapper)
     li.appendChild(pokemonImage)
+}
+
+async function loadPokemons (listOfPokemons) {
+    const ul = document.querySelector('ul')
+
+    setListItem()
+
     let size = listOfPokemons.length - 1
     for (let i = 0; i < size; i++) {
-        console.count()
         const pokemonTag = li.cloneNode(true)
         pokemonTag.querySelector('.pokemon-title').textContent = listOfPokemons[i].name
         ul.appendChild(pokemonTag)
         
         pokemonImageUrl = await getPokemonImage(listOfPokemons[i].url);
-      
         let pokemon = new Pokemon(listOfPokemons[i].name, pokemonImageUrl)
-        console.log(pokemon)
+      
         pokemonTag.querySelector('img').src = pokemon.image_url
         listOfPokemons.push(pokemon)
 
-        
     }
 }
 
-
 main()
-
-
 
 class Pokemon {
     constructor(name, image_url){
